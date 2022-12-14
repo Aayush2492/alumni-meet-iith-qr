@@ -12,7 +12,7 @@ export default function Home() {
 
   if (session) {
     console.log("Sign in successful", session);
-    if (!session.user.email.endsWith("@iith.ac.in")) {
+    if (!session.user.email.endsWith("iith.ac.in")) {
       alert("Please sign in with your IITH email");
       signOut();
     }
@@ -38,11 +38,7 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href="https://iith.dev" target="_blank" rel="noopener noreferrer">
           A{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { QrReader } from "react-qr-reader";
 import styles from "../styles/Home.module.css";
 
@@ -8,10 +8,33 @@ function Scan() {
   const [capacity, setCapacity] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const getFromLocalStorage = (key) => {
+    if (typeof window !== "undefined") {
+      const ans = localStorage.getItem(key);
+      // console.log(key, ans);
+      return ans;
+    }
+    return null;
+  };
+
+  const setToStorage = (key, value) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(key, value);
+    }
+  };
+
   const getUserData = async (email) => {
     // email = "cs20btech11001@iith.ac.in";
     email = email.toLowerCase();
     if (email !== "no result") {
+      const valFromLocalStorage = getFromLocalStorage(email);
+      if (valFromLocalStorage) {
+        // console.log("From local storage", valFromLocalStorage);
+        setStatus(true);
+        setCapacity(valFromLocalStorage);
+        return;
+      }
+
       const jsondata = JSON.stringify(email);
       const response = await fetch("/api/get_status", {
         method: "POST",
@@ -24,10 +47,11 @@ function Scan() {
         setErrorMessage("User not found");
       } else {
         const data = await response.json();
-        console.log("status", data.status);
-        console.log("capacity", data.capacity);
+        // console.log("status", data.status);
+        // console.log("capacity", data.capacity);
         setStatus(data.status);
         setCapacity(data.capacity);
+        setToStorage(email, data.capacity);
       }
     }
   };

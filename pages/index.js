@@ -10,10 +10,10 @@ export default function Home() {
 
   if (session) {
     console.log("Sign in successful", session);
-    if (!session.user.email.endsWith("iith.ac.in")) {
-      alert("Please sign in with your IITH email");
-      signOut();
-    }
+    // if (!session.user.email.endsWith("iith.ac.in")) {
+    //   alert("Please sign in with your IITH email");
+    //   signOut();
+    // }
 
     // push to generate page or scan page based on email
     router.push(`/generate`);
